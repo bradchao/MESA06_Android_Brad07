@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,17 +16,34 @@ public class MainActivity extends AppCompatActivity {
     private TextView clock;
     private boolean isRunning;
     private int Counter;
+    private Timer timer;
+    private ClockTask clockTask;
+    private UIHandler uiHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        timer = new Timer();
+        uiHandler = new UIHandler();
+
         left = (Button)findViewById(R.id.btnLeft);
         right = (Button)findViewById(R.id.btnRight);
         clock = (TextView)findViewById(R.id.timer);
 
     }
+
+    @Override
+    public void finish() {
+        if (timer != null){
+            timer.purge();
+            timer.cancel();
+            timer = null;
+        }
+        super.finish();
+    }
+
     public void doLeft(View v){
 
     }
@@ -41,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void doStart(){
-
+            clockTask = new ClockTask();
+            timer.schedule(clockTask, 10, 10);
     }
     private void doStop(){
-
+            clockTask.cancel();
     }
     private void doReset(){
 
@@ -57,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             Counter++;
+            uiHandler.sendEmptyMessage(0);
         }
     }
     private class UIHandler extends Handler {
