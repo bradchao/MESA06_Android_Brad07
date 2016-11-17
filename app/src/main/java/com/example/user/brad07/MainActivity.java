@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private Button left, right;
     private TextView clock;
+    private boolean isRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void doRight(View v){
-
+        isRunning = !isRunning;
+        right.setText(isRunning?"Stop":"Start");
+        left.setText(isRunning?"Lap":"Reset");
     }
 
 
