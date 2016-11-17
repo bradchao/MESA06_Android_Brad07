@@ -28,6 +28,24 @@ public class MainActivity extends AppCompatActivity {
         isRunning = !isRunning;
         right.setText(isRunning?"Stop":"Start");
         left.setText(isRunning?"Lap":"Reset");
+
+        if (isRunning){
+            doStart();
+        }else{
+            doStop();
+        }
+    }
+    private void doStart(){
+
+    }
+    private void doStop(){
+
+    }
+    private void doReset(){
+
+    }
+    private void doLap(){
+
     }
 
 
