@@ -1,15 +1,20 @@
 package com.example.user.brad07;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
     private Button left, right;
     private TextView clock;
     private boolean isRunning;
+    private int Counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    private class ClockTask extends TimerTask {
+        @Override
+        public void run() {
+            Counter++;
+        }
+    }
+    private class UIHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clock.setText("" + Counter);
+        }
+    }
 
 }
